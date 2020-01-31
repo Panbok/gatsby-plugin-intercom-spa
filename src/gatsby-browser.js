@@ -1,19 +1,24 @@
-const isEnabled = () => ((window.IntercomIncludeInDevelopment || process.env.NODE_ENV === `production`) && typeof Intercom === `function` && window.IntercomAppId)
+const isEnabled = () =>
+  (window.IntercomIncludeInDevelopment ||
+    process.env.NODE_ENV === `production`) &&
+  typeof Intercom === `function` &&
+  window.IntercomAppId;
 
 exports.onInitialClientRender = () => {
   if (!isEnabled()) {
-    return
+    return;
   }
 
-  window.Intercom('boot', {
-    app_id: window.IntercomAppId
-  })
-}
+  window.Intercom("boot", {
+    app_id: window.IntercomAppId,
+    alignment: window.IntercomAlignment
+  });
+};
 
-exports.onRouteUpdate = function ({ location }) {
+exports.onRouteUpdate = function({ location }) {
   if (!isEnabled()) {
-    return
+    return;
   }
 
-  window.Intercom('update')
-}
+  window.Intercom("update");
+};
